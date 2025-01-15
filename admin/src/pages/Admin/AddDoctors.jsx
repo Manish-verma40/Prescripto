@@ -34,10 +34,10 @@ const AddDoctors=()=>{
         formData.append('fees',Number(fees));
         formData.append('speciality',speciality);
         formData.append('degree',education);
-        formData.append('address',JSON.stringify({line1:address1,line2:address2}));
+         formData.append('address',JSON.stringify({line1:address1,line2:address2}));
      
         formData.append('about',about);
-        formData.append('docImag',docImag);
+        formData.append('image',docImag);
 
          //console log form Data
          formData.forEach((value,key) => {
@@ -49,7 +49,9 @@ const {data}=await axios.post('http://localhost:4000/api/admin/add-doctor',formD
     console.log('uploaded');
     toast.success(data.message);
   }else{
-  data.error && toast.error(data.error);
+    
+    console.log(data.error);
+   data.error && toast.error(data.error);
   }
 
     }catch(err){
