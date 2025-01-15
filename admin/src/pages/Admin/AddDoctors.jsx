@@ -12,13 +12,14 @@ const AddDoctors=()=>{
     const [fees,setFees]=useState('');
     const [speciality,setSpeciality]=useState('General physician');
     const [education,setEducation]=useState('');
-    const [docImag,setDocImag]=useState(false);
+    const [docImag,setDocImag]=useState('');
     const [address1,setAddress1]=useState('');
     const [address2,setAddress2]=useState('');
     const [about,setAbout]=useState('');
     const {backendUrl,aToken}=useContext(AdminContext);
 
    const onSubmitHandler=async(e)=>{
+    console.log(aToken,"hello");
     console.log('submitting');
      e.preventDefault();
     try{
@@ -44,7 +45,7 @@ const AddDoctors=()=>{
          });
 
 const {data}=await axios.post('http://localhost:4000/api/admin/add-doctor',formData,{headers:{aToken}});
-  if(data.sucess){
+  if(data.success){
     console.log('uploaded');
     toast.success(data.message);
   }else{
@@ -52,7 +53,8 @@ const {data}=await axios.post('http://localhost:4000/api/admin/add-doctor',formD
   }
 
     }catch(err){
-
+        console.log(err);
+        err.response && toast.error(err.response.data.error);
     }
    }
     return (

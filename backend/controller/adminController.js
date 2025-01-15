@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken"
 const addDoctor = async (req, res) => {
     try {
         const { name, email, password, speciality, degree, experience, about, fees, address } = req.body;
-
+        
           const imageFile = req.file;
 
         if (!name || !password || !email || !speciality || !degree || !experience || !about || !fees || !address) {
@@ -57,7 +57,10 @@ const addDoctor = async (req, res) => {
 const loginAdmin=async(req,res)=>{
     try{
         const {email,password}=req.body
-        if(email==process.env.ADMIN_EMAIL && password===process.env.ADMIN_PASSWORD){
+
+        if(email===process.env.ADMIN_EMAIL && password===process.env.ADMIN_PASSWORD){
+            
+ 
               const token=jwt.sign(email+password,process.env.JWT_SECRET)
               res.json({success:true,token})
         }else{
