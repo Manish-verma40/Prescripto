@@ -1,4 +1,8 @@
+/* filepath: /c:/Users/verma/Desktop/Prescipto/admin/src/index.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+/* //to hide the scrollbar */
+::-webkit-scrollbar{
+    @apply hidden
+}
