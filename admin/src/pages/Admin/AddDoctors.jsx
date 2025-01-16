@@ -48,6 +48,18 @@ const {data}=await axios.post('http://localhost:4000/api/admin/add-doctor',formD
   if(data.success){
     console.log('uploaded');
     toast.success(data.message);
+    setEmail('');
+    setPassword('');
+    setName('');
+    setExperience('1 year');
+    setFees('');
+    setSpeciality('General physician');
+    setEducation('');
+    setDocImag(false);
+    setAddress1('');
+    setAddress2('');
+    setAbout('');
+
   }else{
     
     console.log(data.error);

@@ -40,7 +40,7 @@ const addDoctor = async (req, res) => {
             experience,
             about,
             fees,
-            address: JSON.parse(address),
+             address: JSON.parse(address),
             date: Date.now()
         };
 
@@ -73,5 +73,14 @@ const loginAdmin=async(req,res)=>{
         res.json({ success: false, message: error.message });
     }
 }
-
-export {addDoctor,loginAdmin};
+//API to get all the doctors list for the admin panel
+const allDoctors=async(req,res)=>{
+    try{
+        const doctors=await doctorModel.find({}).select("-password");
+        res.json({success:true,doctors})
+    }catch(error){
+        console.log(error);
+        res.json({ success: false, message: error.message });
+    }
+}
+export {addDoctor,loginAdmin,allDoctors};
