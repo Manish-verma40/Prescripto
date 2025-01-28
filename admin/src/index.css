@@ -1,8 +1,12 @@
 /* filepath: /c:/Users/verma/Desktop/Prescipto/admin/src/index.css */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Great+Vibes&family=Italianno&family=Outfit:wght@100..900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 /* //to hide the scrollbar */
 ::-webkit-scrollbar{
     @apply hidden
+}
+*{
+    font-family: Outfit;
 }
