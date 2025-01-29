@@ -9,7 +9,7 @@ export const AppContextProvider = (props) => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
    
     const [doctors, setDoctors] = useState([]);
-
+    const[token,setToken]=useState(localStorage.getItem('token')?localStorage.getItem('token'):false);
    const getDoctorsData= async ()=>{
      try{
        const {data}=await axios.get('http://localhost:4000/api/doctor/list');
@@ -23,8 +23,10 @@ export const AppContextProvider = (props) => {
         toast.error(error.message);
      }
    }
+   
    const value = {
-    doctors
+    doctors,
+    token,setToken,backendUrl
 };
 
   useEffect(() => {

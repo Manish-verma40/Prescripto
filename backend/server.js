@@ -5,6 +5,7 @@ import connectDB from './config/mongodb.js';
 import connectCloudinary from './config/cloudinary.js';
 import adminRouter from './routes/adminRout.js';
 import doctorRouter from './routes/doctorRout.js';
+import userRouter from './routes/userRout.js';
 // app config
 const app = express();
 const port = process.env.PORT || 4000;
@@ -20,6 +21,8 @@ app.use('/api/admin',adminRouter);
 
 //localhost:4000/api/admin/add-doctor
 app.use('/api/doctor',doctorRouter);
+app.use('/api/user',userRouter);
+
 app.get('/', (req, res) => {
     res.send('API WORKING at');
 });
