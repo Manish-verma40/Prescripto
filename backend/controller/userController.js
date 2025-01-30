@@ -62,18 +62,39 @@ const loginUser = async (req, res) => {
 //API to get user profile data
 const getProfile = async (req, res) => {
   try {
-     const { userId } = req.body;
-     const user = await userModel.findOne({ userId }).select('-password'); 
-     if (!user) {
-        return res.status(404).json({ success: false, message: 'User not found' });
-     }
-
-     
-     return res.json({ success: true, data: user });
+    const { userId } = req.body;
+    const user = await userModel.findOne({ userId }).select('-password'); 
+    
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+    return res.json({ success: true, data: user });
   } catch (error) {
-     console.error(error);
-     return res.status(500).json({ success: false, message: 'Server error' });
+    return res.status(500).json({ success: false, message: 'Server error' });
   }
 };
 
-export {registerUser,loginUser,getProfile};
+//API to update the user profile
+const updateProfile= async (req,res)=>{
+  try{
+  const {userId,name,phone,address,dob,gender}=req.body;
+    const imageFile=req.file;
+    if(!name || !phone || !address || !dob || !gender){
+      res.json({success:false,message:"missing information"});
+    }
+    const imageUpload = await cloudinary.uploader.upload(imageFile.path, { resource_type: "image" });
+            const imageUrl = imageUpload.secure_url;
+            console.log(imageUrl);
+            const updated= await userModel.findByIdAndUpdate(userId,{name:name},{phone,phone},{address:address},{dob:dob},{gender:gender},{image:imageUrl});
+            if(!updated){
+              res.json({success:false,message:"fail to update user Profile"});
+            }
+            res.json({success:true,message:"user Profile updated"});
+
+  }catch(error){
+    console.log(error);
+    res.json({success:false,message:"server not working properly"});
+  }
+}
+
+export {registerUser,loginUser,getProfile,updateProfile};
