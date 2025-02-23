@@ -10,7 +10,7 @@ const Banner=()=>{
      <p>Book Appointment</p>
      <p>with 100+ Trusted Doctors</p>
       </div>
-      <button onClick={()=>{navigate('/login'), scrollTo(0,0)}} className=' flex item-center gap-2 bg-white px-8 py-3 rounded-full text-gray-600 text-sm mt-6 hover:scale-105 transition-all duration-300'>Create account</button>
+      <button onClick={()=>{window.scrollTo({top:0,right:0,behavior:'smooth'});navigate('/login')}} className=' flex item-center gap-2 bg-white px-8 py-3 rounded-full text-gray-600 text-sm mt-6 hover:scale-105 transition-all duration-300'>Create account</button>
   </div>
   {/* right */}
 
