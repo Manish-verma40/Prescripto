@@ -90,7 +90,7 @@ const Appointment = () => {
          const year=date.getFullYear();
      const slotDate=day+"_"+month+"_"+year;
      console.log(slotDate);
-     const {data}=await axios.post('http://localhost:4000/api/user/book-appointment',{docId,slotDate,slotTime},{headers:{token}});
+     const {data}=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/book-appointment`,{docId,slotDate,slotTime},{headers:{token}});
      if(data.success){
       toast.success(data.message);
       getDoctorsData();

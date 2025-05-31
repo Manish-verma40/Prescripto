@@ -44,7 +44,7 @@ const AddDoctors=()=>{
             console.log(`${key} : ${value}`);
          });
 
-const {data}=await axios.post('http://localhost:4000/api/admin/add-doctor',formData,{headers:{atoken:aToken}});
+const {data}=await axios.post(`${backendUrl}/api/admin/add-doctor`,formData,{headers:{atoken:aToken}});
   if(data.success){
     console.log('uploaded');
     toast.success(data.message);

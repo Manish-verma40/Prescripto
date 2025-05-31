@@ -11,7 +11,8 @@ const Login=()=>{
     const [email,setEmail]=useState('');
     const navigate=useNavigate();
     const [password,setPassword]=useState('');
-
+   
+     
     const {setAToken,backendUrl}=useContext(AdminContext);
     const {setDToken}=useContext(DoctorContext);
   
@@ -21,7 +22,7 @@ const Login=()=>{
     if(state === 'Admin'){
         
        
-        const {data}=await axios.post('http://localhost:4000/api/admin/login',{email,password});
+        const {data}=await axios.post(`${backendUrl}/api/admin/login`,{email,password});
         if(data.success){
             //inspect->application->local storage->http://localhost:3000->aToken
             localStorage.setItem('aToken',data.token);
@@ -32,7 +33,7 @@ const Login=()=>{
         }
     }else{
         
-        const {data}=await axios.post('http://localhost:4000/api/doctor/login',{email,password});
+        const {data}=await axios.post(`${backendUrl}/api/doctor/login`,{email,password});
         
         if(data.success){
             localStorage.setItem('dToken',data.token);

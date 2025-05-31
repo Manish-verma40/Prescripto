@@ -5,11 +5,11 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 const MyAppointments = () => {
-    const { token,getDoctorsData} = useContext(AppContext);
+    const { token,getDoctorsData,backendUrl} = useContext(AppContext);
     const [appointments,setAppointments]=useState([])
      const getUserAppointments=async ()=>{
         try {
-            const {data}=await axios.get("http://localhost:4000/api/user/appointments",{headers:{token}});
+            const {data}=await axios.get(`${backendUrl}/api/user/appointments`,{headers:{token}});
             
             if(data.success){
                 setAppointments(data.appointments);
@@ -25,7 +25,7 @@ const MyAppointments = () => {
      const cancelAppointment=async(appointmentId)=>{
         try{
                 //check url link
-          const {data}=await axios.post('http://localhost:4000/api/user/cancel-appointment',{appointmentId},{headers:{token}});
+          const {data}=await axios.post(`${backendUrl}/api/user/cancel-appointment`,{appointmentId},{headers:{token}});
           if(data.success){
             toast.success(data.message);
             getUserAppointments()

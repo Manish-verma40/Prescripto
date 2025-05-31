@@ -6,7 +6,7 @@ import { useState } from "react";
 export const DoctorContext=createContext();
 const DoctorContextProvider=(props)=>{
 
-    const backendUrl="http://localhost:4000";
+    const backendUrl=import.meta.env.VITE_APP_BACKEND;
     const [dToken,setDToken]=useState(localStorage.getItem('dToken') || '');
     const [appointments,setAppointments]=useState([]);
     const [dashData,setDashData]=useState(false);
