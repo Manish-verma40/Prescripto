@@ -7,13 +7,13 @@ export const AdminContext = createContext();
 const AdminContextProvider = (props) => {
   const [aToken, setAToken] = useState(localStorage.getItem('aToken') || '');
   const [doctors, setDoctors] = useState([]);
+  const [appointments, setAppointments] = useState([]);
+  const [dashData,setDashData]=useState(false);
   const backendUrl = import.meta.env.VITE_APP_BACKEND;
 
   const getAllDoctors = async () => {
     try {
-      const { data } = await axios.post(`${backendUrl}/api/admin/all-doctors`, {}, {
-        headers: { Authorization: `Bearer ${aToken}` }
-      });
+      const { data } = await axios.get('http://localhost:4000/api/admin/all-doctors', { headers: { atoken: aToken } });
       if (data.success) {
         setDoctors(data.doctors);
       } else {
@@ -26,7 +26,7 @@ const AdminContextProvider = (props) => {
   };
 
   const changeAvailability = async (docId) => {
-    console.log('change avilabity called');
+    console.log('change availability called');
     try {
       const { data } = await axios.post(`${backendUrl}/api/admin/change-availability`, { docId }, {
         headers: { Authorization: `Bearer ${aToken}` }
@@ -43,14 +43,44 @@ const AdminContextProvider = (props) => {
     }
   };
 
+  const getAllAppointments = async () => {
+    try {
+      const { data } = await axios.get('http://localhost:4000/api/admin/all-appointments', { headers: { atoken: aToken } });
+      if (data.success) {
+       
+        setAppointments(data.appointments);
+      
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
+  const getDashData=async ()=>{
+   try{
+    const {data}=await axios.get('http://localhost:4000/api/admin/dashboard',{headers:{atoken: aToken}}); 
+    if(data.success){
+      console.log(data.dashData);
+     setDashData(data.dashData);
+    }else{
+      toast.error({success:false,message:data.message});
+    }
+   }catch(error){
+  console.log(error);
+  toast.error(error.message);
+   }
+  }
   useEffect(() => {
     if (aToken) {
       getAllDoctors();
+      getAllAppointments();
     }
   }, [aToken]);
 
   return (
-    <AdminContext.Provider value={{ aToken, setAToken, doctors, changeAvailability }}>
+    <AdminContext.Provider value={{ aToken, setAToken, doctors, appointments, getAllAppointments, changeAvailability, getAllDoctors,dashData,getDashData }}>
       {props.children}
     </AdminContext.Provider>
   );

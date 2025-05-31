@@ -184,7 +184,10 @@ const cancelAppointment=async(req,res)=>{
     const {docId,slotDate,slotTime,}=appointmentData;
      const doctorData=await doctorModel.findById(docId);
      console.log(slotDate);
-     let slots_booked=doctorData.slots_booked[slotDate].filter(e=>e !==slotTime)
+     let slots_booked = [];
+if (Array.isArray(doctorData.slots_booked[slotDate])) {
+  slots_booked = doctorData.slots_booked[slotDate].filter(e => e !== slotTime);
+}
      await doctorModel.findByIdAndUpdate(docId,{slots_booked})
      return res.json({success:true,message:'appointment cancelled'})
   } catch (error) {
@@ -194,11 +197,11 @@ const cancelAppointment=async(req,res)=>{
 }
 
 //Api to make payment using razorpay
-const razorpayInstance=new razorpay({
-  key_id:'',
-  key_secret:''
-})
-const paymentRazorpay= async (req,res)=>{
+// const razorpayInstance=new razorpay({
+//   key_id:'',
+//   key_secret:''
+// })
+// const paymentRazorpay= async (req,res)=>{
 
-}
+// }
 export {registerUser,loginUser,getProfile,updateProfile,bookAppointment,listAppointment,cancelAppointment};

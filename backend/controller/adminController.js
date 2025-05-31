@@ -3,6 +3,8 @@ import bcrypt from "bcrypt";
 import { v2 as cloudinary } from "cloudinary";
 import doctorModel from "../models/doctorModel.js";
 import jwt from "jsonwebtoken"
+import appointmentModel from "../models/appointmentModel.js";
+import userModel from "../models/userModel.js";
 const addDoctor = async (req, res) => {
     try {
         const { name, email, password, speciality, degree, experience, about, fees, address } = req.body;
@@ -40,7 +42,7 @@ const addDoctor = async (req, res) => {
             experience,
             about,
             fees,
-             address: JSON.parse(address),
+             address,
             date: Date.now()
         };
 
@@ -77,10 +79,41 @@ const loginAdmin=async(req,res)=>{
 const allDoctors=async(req,res)=>{
     try{
         const doctors=await doctorModel.find({}).select("-password");
+        console.log(doctors);
         res.json({success:true,doctors})
     }catch(error){
         console.log(error);
         res.json({ success: false, message: error.message });
     }
 }
-export {addDoctor,loginAdmin,allDoctors};
+// Api to get All Appointments for the Admin
+ const allAppointments= async(req,res)=>{
+  try{
+    const appointments=await appointmentModel.find({});
+      console.log(appointments);
+      res.json({success:true,appointments})
+  }catch(error){
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+ }
+ //API to get data for admin panel
+ const adminDashboard=async (req,res)=>{
+  try{
+   const doctors=await doctorModel.find({});
+   const users=await userModel.find({});
+   const appointments=await appointmentModel.find({});
+   const dashData={
+    doctors:doctors.length,
+    appointments:appointments.length,
+    patients:users.length,
+    latestAppointments:appointments.reverse().slice(0,5)
+   }
+   res.json({success:true,dashData});
+  }catch(error){
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+ }
+ 
+export {addDoctor,loginAdmin,allDoctors,allAppointments,adminDashboard};

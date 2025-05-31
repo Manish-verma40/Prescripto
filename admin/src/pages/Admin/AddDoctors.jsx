@@ -13,8 +13,8 @@ const AddDoctors=()=>{
     const [speciality,setSpeciality]=useState('General physician');
     const [education,setEducation]=useState('');
     const [docImag,setDocImag]=useState('');
-    const [address1,setAddress1]=useState('');
-    const [address2,setAddress2]=useState('');
+    const [address,setAddress]=useState('');
+   
     const [about,setAbout]=useState('');
     const {backendUrl,aToken}=useContext(AdminContext);
 
@@ -34,7 +34,7 @@ const AddDoctors=()=>{
         formData.append('fees',Number(fees));
         formData.append('speciality',speciality);
         formData.append('degree',education);
-         formData.append('address',JSON.stringify({line1:address1,line2:address2}));
+         formData.append('address',address);
      
         formData.append('about',about);
         formData.append('image',docImag);
@@ -44,7 +44,7 @@ const AddDoctors=()=>{
             console.log(`${key} : ${value}`);
          });
 
-const {data}=await axios.post('http://localhost:4000/api/admin/add-doctor',formData,{headers:{aToken}});
+const {data}=await axios.post('http://localhost:4000/api/admin/add-doctor',formData,{headers:{atoken:aToken}});
   if(data.success){
     console.log('uploaded');
     toast.success(data.message);
@@ -56,8 +56,8 @@ const {data}=await axios.post('http://localhost:4000/api/admin/add-doctor',formD
     setSpeciality('General physician');
     setEducation('');
     setDocImag(false);
-    setAddress1('');
-    setAddress2('');
+    setAddress('');
+   
     setAbout('');
 
   }else{
@@ -136,8 +136,7 @@ const {data}=await axios.post('http://localhost:4000/api/admin/add-doctor',formD
                     </div>
                     <div className="flex-1 flex flex-col gap-1">
                         <p>Address</p>
-                        <input onChange={(e)=>setAddress1(e.target.value)} value={address1}className='border-rounded px-3 py-2 ' type="text" placeholder='address 1' required ></input>
-                        <input onChange={(e)=>setAddress2(e.target.value)} value={address2} className='border-rounded px-3 py-2 ' type="text" placeholder='address 2' required ></input>
+                        <input onChange={(e)=>setAddress(e.target.value)} value={address}className='border-rounded px-3 py-2 ' type="text" placeholder='address' required ></input>
                     </div>
                     </div>
                 </div>

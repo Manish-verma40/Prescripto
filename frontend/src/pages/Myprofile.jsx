@@ -38,13 +38,20 @@ const MyProfile = () => {
     return userData && (
         <div className='max-w-lg mx-auto p-4 flex flex-col gap-4 text-sm'>
             {
-                 //src={image ? URL.createObjectURL(image) : userData.image}
                 isEdit
                     ? <label htmlFor="image">
                         <div className="inline-block relative cursor-pointer">
-                            <img className="w-36 rounded opacity-75" src={userData.image} alt="" />
-                            <img className="w-10 absolute bottom-12 right-12" src={image ? '' : assets.upload_icon} alt="" />
-                            <input onChange={(e) => setImage(e.target.files[0])} type="file" name="" id="image" hidden />
+                            <img
+                                className="w-36 rounded opacity-75"
+                                src={image ? URL.createObjectURL(image) : userData.image}
+                                alt="Profile Preview"
+                            />
+                            <img
+                                className="w-10 absolute bottom-12 right-12"
+                                src={assets.upload_icon}
+                                alt="Upload Icon"
+                            />
+                            <input onChange={(e) => setImage(e.target.files[0])} type="file" id="image" hidden />
                         </div>
                     </label>
                     : <img className='w-36 h-36 rounded-full mx-auto' src={userData.image} alt="Profile" />
